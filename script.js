@@ -1,5 +1,6 @@
 const loader = document.getElementById('loader')
 const loaderMessage = document.getElementById('loading_message')
+const loaderImage = document.getElementById('loading_image')
 const video = document.getElementById('video')
 
 loaderMessage.innerHTML = "Loading Models"
@@ -22,7 +23,11 @@ function startVideo() {
       loader.style.display = 'none';
       video.srcObject = stream;
     }, 
-    (err)=> console.error(err)
+    (err)=> {
+      loaderImage.style.display = 'none';
+      loaderMessage.innerHTML = "Failed to load camera"
+      console.error(err)
+    }
   );
 }
 
