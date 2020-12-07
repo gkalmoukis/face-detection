@@ -1,4 +1,8 @@
+const loader = document.getElementById('loader')
+const loaderMessage = document.getElementById('loading_message')
 const video = document.getElementById('video')
+
+loaderMessage.innerHTML = "Loading Models"
 
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -8,7 +12,18 @@ Promise.all([
 ]).then(startVideo)
 
 function startVideo() {
-  navigator.mediaDevices.getUserMedia({video: {}}) .then((stream)=> {video.srcObject = stream;}, (err)=> console.error(err));
+  loaderMessage.innerHTML = "Loading Camera"
+  
+  navigator.mediaDevices.getUserMedia({
+    video: {}
+  }) 
+  
+  .then(  (stream)  => {
+      loader.style.display = 'none';
+      video.srcObject = stream;
+    }, 
+    (err)=> console.error(err)
+  );
 }
 
 video.addEventListener('play', () => {
